@@ -1,0 +1,177 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PASO 3 · EVALUACIÓN INICIAL · 2º ESOA</title><style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;color:#172033}
+main{max-width:1050px;margin:auto;padding:20px 16px 45px}
+.card{background:#fff;border:1px solid #dce2ec;border-radius:18px;padding:20px;margin:16px 0}
+header{background:#fff8ee;border:1px solid #f0dcc1;border-radius:18px;padding:20px;text-align:center}
+h1{margin:0;color:#6537a5;font-size:30px}
+.subtitle{color:#ef8b12;font-size:19px;font-weight:800;margin-top:5px}
+.hidden{display:none!important}
+.lock{max-width:650px;margin:70px auto;text-align:center}
+.lock-icon{font-size:52px}
+input,textarea{width:100%;padding:12px;border:1px solid #cbd3df;border-radius:10px;font:inherit}
+textarea{min-height:150px;resize:vertical}
+label{display:block;font-weight:700;margin:13px 0 7px}
+button{border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer;background:#e9edf5;color:#172033}
+.primary{background:#315efb;color:#fff}
+.green{background:#20a044;color:#fff}
+.recording{background:#b42318;color:#fff}
+button:disabled{opacity:.55;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.key{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap}
+.key input{max-width:310px;text-align:center;font-size:19px}
+.error{background:#fdecec;color:#9b1c1c;padding:11px;border-radius:10px;margin-top:12px}
+.success{background:#e8f6ee;color:#177245;padding:12px;border-radius:10px}
+.status{margin-top:10px;padding:10px;border-radius:10px;background:#eef2f7}
+.pictograma{display:block;width:100%;max-width:1000px;margin:0 auto;border-radius:14px}
+.timer-box{border:1px solid #b9d0f8;border-radius:14px;padding:15px;text-align:center;margin-top:16px}
+.timer{font-size:36px;font-weight:800;color:#1260c9;margin:5px}
+canvas{width:100%;height:320px;background:#fff;border:1px solid #cbd3df;border-radius:10px;touch-action:none}
+audio{width:100%;margin-top:12px}
+.small{font-size:13px;color:#5e6878}
+@media(max-width:700px){h1{font-size:25px}}
+</style></head><body><main><section id="bloqueo" class="card lock"><div class="lock-icon">🔐</div><h1>PASO 3</h1><div class="subtitle">NUEVA INFORMACIÓN</div><p>Este paso está bloqueado.</p><p><strong>Introduce la clave que te ha dado el profesor o profesora para comenzar.</strong></p><div class="key"><input id="clave" type="password" autocomplete="off" placeholder="Escribe la clave"><button id="comprobar" class="primary">COMPROBAR</button></div><div id="errorClave" class="hidden"></div></section><section id="contenido" class="hidden">
+<header><h1>PASO 3 · UN RETO MÁS</h1><div class="subtitle">La historia continúa: ahora tenéis toda la información</div></header>
+<section class="card"><h2>👥 Antes de empezar</h2><p>Escribid el <strong>nombre del grupo</strong> y el nombre de <strong>un alumno o alumna que entregará la propuesta</strong>.</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div><label for="grupo">Nombre del grupo</label><input id="grupo" placeholder="Ej.: Los exploradores"></div><div><label for="alumno">Nombre del alumno/a que entrega</label><input id="alumno" placeholder="Nombre y apellidos"></div></div></section>
+<section class="card" style="background:#f4f0ff;border:2px solid #cdbbea"><h2>🧩 RECORDAD LO QUE HA OCURRIDO</h2><p>En el <strong>Paso 1</strong> conocisteis a un nuevo integrante de la clase con una pérdida de visión muy importante. Vuestro reto fue pensar cómo podía llegar desde la puerta hasta su pupitre.</p><p>En el <strong>Paso 2</strong> apareció una nueva dificultad: además tenía una gran pérdida de audición. Tuvisteis que volver a pensar vuestra solución.</p><p><strong>En el Paso 3 descubrís una nueva información:</strong></p><div class="question" style="margin-top:16px">⚠️ <strong>Nuestro nuevo integrante no tolera el contacto físico prolongado. No se le puede coger de la mano ni mantener contacto con ninguna parte de su cuerpo durante más de 1 segundo.</strong></div><p style="margin-top:16px">Ya sabéis que tiene una pérdida de visión muy importante y una gran pérdida de audición. Ahora, con esta nueva condición, revisad todo lo que habíais pensado hasta el momento.</p><div class="question" style="margin-top:16px">❓ <strong>¿Cómo conseguiríais que llegue desde la puerta hasta su pupitre?</strong></div><p style="margin-top:16px">No recibiréis pistas ni ejemplos. Analizad el problema, descartad las ideas que ya no sean válidas y cread vuestra propia solución.</p></section>
+<section class="card"><div class="timer-box"><div>⏱️ <strong>Tiempo para pensar y proponer ideas</strong></div><div id="timer" class="timer">03:00</div><button id="iniciarTimer" class="primary">INICIAR</button><button id="reiniciarTimer">REINICIAR</button></div></section>
+<section class="card"><h2>💡 VUESTRA PROPUESTA</h2><p>👥 Pensad en grupo todas las posibilidades que se os ocurran.</p><p>⭐ Elegid la que consideréis mejor y explicad <strong>cómo funcionaría y por qué</strong>.</p><label for="texto">Explicad vuestra solución</label><textarea id="texto" placeholder="Explicad vuestra propuesta sin dejar pasos importantes sin aclarar..."></textarea><label>🎨 También podéis representarla con un dibujo</label><canvas id="canvas" width="1000" height="500"></canvas><div class="row" style="margin-top:10px"><button id="borrar">🧹 Borrar dibujo</button></div><label>🎙️ Si lo preferís, podéis grabar una explicación (máx. 60 segundos)</label><div class="row"><button id="grabar" class="primary">🎙️ INICIAR GRABACIÓN</button><button id="parar" disabled>⏹️ DETENER</button></div><audio id="audio" controls class="hidden"></audio><div id="audioInfo" class="status">Todavía no hay grabación.</div></section>
+<section class="card" style="background:#fff9e8;border:2px solid #f1c75b"><h2 style="color:#6537a5;text-align:center">🧠 CONVERTID VUESTRA SOLUCIÓN EN UN ALGORITMO</h2><p>Describid <strong>paso a paso y en el orden exacto</strong> qué tendría que ocurrir para que vuestro compañero llegue desde la puerta hasta su pupitre.</p><p>No hay un ejemplo que copiar: vosotros decidís el procedimiento.</p><label for="algoritmo">🧩 Vuestro algoritmo</label><textarea id="algoritmo" placeholder="Paso 1...
+Paso 2...
+Paso 3..."></textarea></section>
+<section class="card" style="background:#eef8ff;border:2px solid #9ccbe8"><h2>🚀 AHORA ID MÁS ALLÁ: INVENTAD UN DISPOSITIVO</h2><p>Conseguir llegar al pupitre no es suficiente. Durante la clase, vuestro compañero debe poder <strong>participar en las explicaciones, preguntas, respuestas y comentarios de los demás</strong> y ser <strong>uno más en la clase</strong>.</p><div class="question">💭 <strong>¿Qué dispositivo inventaríais para conseguirlo?</strong></div><p>No os damos componentes, tecnologías ni ejemplos. Pensad qué problema debe resolver vuestro dispositivo y cómo debería funcionar.</p><label for="dispositivo">Describid vuestro invento</label><textarea id="dispositivo" placeholder="¿Qué inventaríais? ¿Qué tendría que hacer? ¿Cómo permitiría a vuestro compañero participar en la clase?"></textarea></section>
+<section class="card"><h2>📦 GUARDAD VUESTRA PROPUESTA DEL PASO 3</h2><p>Se descargará un <strong>archivo ZIP</strong> con vuestra propuesta, el algoritmo y el dispositivo que habéis imaginado.</p><button id="guardar" class="green" style="width:100%">⬇️ GUARDAR MI PROPUESTA (PASO 3)</button><div id="estado" class="status">Todavía no se ha generado ninguna entrega.</div></section></section></main><script>
+const CLAVE="2cyr";
+function desbloquear(){
+const v=document.getElementById("clave").value.trim().toLowerCase(),e=document.getElementById("errorClave");
+if(v===CLAVE){document.getElementById("bloqueo").classList.add("hidden");document.getElementById("contenido").classList.remove("hidden");window.scrollTo(0,0);}
+else{e.className="error";e.textContent="❌ Clave incorrecta. Pide la clave al profesor o profesora.";}
+}
+document.getElementById("comprobar").onclick=desbloquear;
+document.getElementById("clave").addEventListener("keydown",e=>{if(e.key==="Enter")desbloquear();});
+// Temporizador
+let segundos=180,intervalo=null;
+function pintarTiempo(){document.getElementById("timer").textContent=String(Math.floor(segundos/60)).padStart(2,"0")+":"+String(segundos%60).padStart(2,"0");}
+document.getElementById("iniciarTimer").onclick=()=>{if(intervalo)return;intervalo=setInterval(()=>{segundos--;pintarTiempo();if(segundos<=0){clearInterval(intervalo);intervalo=null;segundos=0;pintarTiempo();alert("⏰ Se han terminado los 3 minutos.");}},1000);};
+document.getElementById("reiniciarTimer").onclick=()=>{clearInterval(intervalo);intervalo=null;segundos=180;pintarTiempo();};
+// Dibujo
+const canvas=document.getElementById("canvas"),ctx=canvas.getContext("2d");
+ctx.lineWidth=5;ctx.lineCap="round";let dibujando=false;
+function punto(e){const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height};}
+canvas.addEventListener("pointerdown",e=>{dibujando=true;canvas.setPointerCapture(e.pointerId);const p=punto(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
+canvas.addEventListener("pointermove",e=>{if(!dibujando)return;const p=punto(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+canvas.addEventListener("pointerup",()=>dibujando=false);
+canvas.addEventListener("pointercancel",()=>dibujando=false);
+document.getElementById("borrar").onclick=()=>ctx.clearRect(0,0,canvas.width,canvas.height);
+// Audio
+let recorder=null,chunks=[],audioBlob=null,streamActual=null,limiteAudio=null,audioMime="";
+const grabar=document.getElementById("grabar"),parar=document.getElementById("parar");
+function formatoAudio(){
+if(!window.MediaRecorder||!MediaRecorder.isTypeSupported)return "";
+const tipos=["audio/webm;codecs=opus","audio/webm","audio/ogg;codecs=opus","audio/mp4"];
+return tipos.find(t=>MediaRecorder.isTypeSupported(t))||"";
+}
+function detenerGrabacion(){
+return new Promise(resolve=>{
+if(!recorder||recorder.state!=="recording"){resolve();return;}
+recorder.addEventListener("stop",()=>resolve(),{once:true});
+try{recorder.requestData();}catch(e){}
+recorder.stop();
+});
+}
+grabar.onclick=async()=>{
+if(recorder&&recorder.state==="recording")return;
+if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+const i=document.getElementById("audioInfo");i.className="error";i.textContent="❌ Este navegador no permite acceder al micrófono. Prueba con Chrome o Edge.";return;
+}
+try{
+streamActual=await navigator.mediaDevices.getUserMedia({audio:true});
+chunks=[];audioMime=formatoAudio();
+recorder=audioMime?new MediaRecorder(streamActual,{mimeType:audioMime}):new MediaRecorder(streamActual);
+recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+recorder.onstop=()=>{
+if(limiteAudio)clearTimeout(limiteAudio);
+if(streamActual)streamActual.getTracks().forEach(t=>t.stop());
+audioMime=recorder.mimeType||audioMime||"audio/webm";
+audioBlob=new Blob(chunks,{type:audioMime});
+const i=document.getElementById("audioInfo");
+if(!audioBlob.size){i.className="error";i.textContent="❌ La grabación está vacía. Vuelve a grabar.";return;}
+const a=document.getElementById("audio");a.src=URL.createObjectURL(audioBlob);a.classList.remove("hidden");
+i.className="success";i.textContent="✅ Audio grabado correctamente. Escúchalo antes de guardar el ZIP.";
+grabar.textContent="🎙️ GRABAR DE NUEVO";grabar.classList.remove("recording");parar.disabled=true;
+};
+recorder.start(250);grabar.textContent="🔴 GRABANDO... (máx. 60 s)";grabar.classList.add("recording");parar.disabled=false;
+document.getElementById("audioInfo").className="status";document.getElementById("audioInfo").textContent="🔴 Grabando... Hablad y después pulsad DETENER.";
+limiteAudio=setTimeout(()=>{if(recorder&&recorder.state==="recording")recorder.stop();},60000);
+}catch(err){
+const i=document.getElementById("audioInfo");i.className="error";i.textContent="❌ No se ha podido acceder al micrófono. Acepta el permiso del navegador y vuelve a intentarlo.";
+}
+};
+parar.onclick=()=>{if(recorder&&recorder.state==="recording")recorder.stop();};
+// ZIP estándar sin librerías externas
+function crc32(bytes){let c=0^(-1);for(let i=0;i<bytes.length;i++){c^=bytes[i];for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xEDB88320:0);}return(c^(-1))>>>0;}
+function u16(n){return new Uint8Array([n&255,(n>>>8)&255]);}
+function u32(n){return new Uint8Array([n&255,(n>>>8)&255,(n>>>16)&255,(n>>>24)&255]);}
+function concatArrays(arrays){let total=0;for(const a of arrays)total+=a.length;const o=new Uint8Array(total);let p=0;for(const a of arrays){o.set(a,p);p+=a.length;}return o;}
+function dosDateTime(){const d=new Date();return{time:(d.getHours()<<11)|(d.getMinutes()<<5)|Math.floor(d.getSeconds()/2),date:((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate()};}
+async function crearZIP(files){
+const enc=new TextEncoder(),local=[],central=[];let offset=0;const dt=dosDateTime();
+for(const f of files){
+const name=enc.encode(f.name),data=new Uint8Array(await f.data.arrayBuffer()),crc=crc32(data);
+const head=concatArrays([u32(0x04034b50),u16(20),u16(0),u16(0),u16(dt.time),u16(dt.date),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),name]);
+local.push(head,data);
+central.push(concatArrays([u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(dt.time),u16(dt.date),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset),name]));
+offset+=head.length+data.length;
+}
+const l=concatArrays(local),c=concatArrays(central);
+return new Blob([l,c,concatArrays([u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(c.length),u32(l.length),u16(0)])],{type:"application/zip"});
+}
+function nombreSeguro(s){return(s||"").trim().replace(/[<>:"/\\|?*]+/g,"_").replace(/\s+/g,"_").slice(0,80);}
+document.getElementById("guardar").onclick=async()=>{
+const grupo=document.getElementById("grupo").value.trim(),alumno=document.getElementById("alumno").value.trim(),texto=document.getElementById("texto").value.trim(),algoritmo=document.getElementById("algoritmo").value.trim(),dispositivo=document.getElementById("dispositivo").value.trim();
+if(!grupo||!alumno){alert("Escribe el nombre del grupo y del alumno/a que entrega.");return;}
+if(recorder&&recorder.state==="recording"){document.getElementById("estado").textContent="⏳ Terminando la grabación...";await detenerGrabacion();}
+const blanco=document.createElement("canvas");blanco.width=canvas.width;blanco.height=canvas.height;
+const hayDibujo=canvas.toDataURL("image/png")!==blanco.toDataURL("image/png");
+const files=[];
+const datos=`EVALUACIÓN INICIAL · 2º ESOA
+PASO 3 · NUEVA INFORMACIÓN
+Grupo: ${grupo}
+Alumno/a que entrega: ${alumno}
+Información acumulada:
+- Tiene una pérdida de visión muy importante.
+- Tiene una gran pérdida de audición.
+Nueva información del Paso 3:
+- No tolera el contacto físico prolongado.
+- No se le puede coger de la mano ni mantener contacto con ninguna parte de su cuerpo durante más de 1 segundo.
+Reto: revisar las soluciones anteriores y conseguir que llegue desde la puerta hasta su pupitre sin recibir pistas sobre la solución.
+Propuesta escrita: ${texto?"SÍ":"NO"}
+Algoritmo: ${algoritmo?"SÍ":"NO"}
+Dispositivo para participar en clase: ${dispositivo?"SÍ":"NO"}
+Propuesta dibujada: ${hayDibujo?"SÍ":"NO"}
+Propuesta de audio: ${audioBlob&&audioBlob.size?"SÍ":"NO"}
+`;
+files.push({name:"datos.txt",data:new Blob([datos],{type:"text/plain;charset=utf-8"})});
+files.push({name:"LEEME.txt",data:new Blob(["Esta entrega corresponde únicamente al PASO 3.\n"],{type:"text/plain;charset=utf-8"})});
+if(texto)files.push({name:"propuesta_paso3_escrita.txt",data:new Blob([texto],{type:"text/plain;charset=utf-8"})});
+if(algoritmo)files.push({name:"algoritmo_paso3.txt",data:new Blob([algoritmo],{type:"text/plain;charset=utf-8"})});
+if(dispositivo)files.push({name:"dispositivo_inventado.txt",data:new Blob([dispositivo],{type:"text/plain;charset=utf-8"})});
+if(hayDibujo){
+const bin=atob(canvas.toDataURL("image/png").split(",")[1]),arr=new Uint8Array(bin.length);
+for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+files.push({name:"propuesta_paso3_dibujo.png",data:new Blob([arr],{type:"image/png"})});
+}
+if(audioBlob&&audioBlob.size){
+let ext=(audioBlob.type||"").includes("ogg")?"ogg":((audioBlob.type||"").includes("mp4")?"m4a":"webm");
+files.push({name:`propuesta_paso3_audio.${ext}`,data:audioBlob});
+}
+try{
+document.getElementById("estado").className="status";document.getElementById("estado").textContent="⏳ Creando el ZIP...";
+const zip=await crearZIP(files),filename=`PASO3_EVALUACION_2ESO_A_${nombreSeguro(grupo)}_${nombreSeguro(alumno)}.zip`;
+const url=URL.createObjectURL(zip),a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),3000);
+const estado=document.getElementById("estado");estado.className="success";
+estado.innerHTML=`<strong>✅ ZIP creado correctamente.</strong><br>Se ha descargado <strong>${filename}</strong> en Descargas.<br><br>Subidlo a Classroom.`;
+}catch(err){console.error(err);document.getElementById("estado").className="error";document.getElementById("estado").textContent="❌ No se ha podido crear el ZIP. Vuelve a intentarlo.";}
+};
+</script></body></html>
